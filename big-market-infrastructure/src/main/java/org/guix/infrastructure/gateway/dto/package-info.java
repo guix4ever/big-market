@@ -1,0 +1,1 @@
+package org.guix.infrastructure.gateway.dto;
