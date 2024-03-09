@@ -1,29 +1,51 @@
-# 命令执行 docker-compose up -d
-version: '3.9'
-services:
-  mysql:
-    image: mysql:8.0.32
-    container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      TZ: Asia/Shanghai
-      #      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' # 可配置无密码，注意配置 SPRING_DATASOURCE_PASSWORD=
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_USER: xfg
-      MYSQL_PASSWORD: 123456
-    depends_on:
-      - mysql-job-dbdata
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./sql:/docker-entrypoint-initdb.d
-    volumes_from:
-      - mysql-job-dbdata
+## 命令执行 docker-compose up -d
+#version: '3.9'
+#services:
+#  mysql:
+#    image: mysql:8.0.32
+#    container_name: mysql
+#    command: --default-authentication-plugin=mysql_native_password
+#    restart: always
+#    environment:
+#      TZ: Asia/Shanghai
+#      #MYSQL_ALLOW_EMPTY_PASSWORD: 'yes' # 可配置无密码，注意配置 SPRING_DATASOURCE_PASSWORD=
+#      MYSQL_ROOT_PASSWORD: 123456
+#      MYSQL_USER: guix
+#      MYSQL_PASSWORD: 123456
+#
+#    depends_on:
+#      - mysql-job-dbdata
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - ./sql:/docker-entrypoint-initdb.d
+#    volumes_from:
+#      - mysql-job-dbdata
 
   # 自动加载数据
-  mysql-job-dbdata:
-    image: alpine:3.18.2
-    container_name: mysql-job-dbdata
+
+version: '3.3'
+
+services:
+
+  mysql-db:
+    # 指定容器的名称
+    container_name: mysql
+    # 指定镜像和版本
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    restart: always
+    # 容器日志大小配置
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '5g'
+    environment:
+      # 配置root密码
+      MYSQL_ROOT_PASSWORD: 123456
     volumes:
-      - /var/lib/mysql
+      # 挂载数据目录
+      - "./mysql/data:/var/lib/mysql"
+      # 挂载配置文件目录
+      - "./mysql/config:/etc/mysql/conf.d"
