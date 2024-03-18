@@ -7,20 +7,19 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author: Guix
- * @description: 抽奖因子实体
- * @date: 2024/3/15 19:17
+ * @description: 策略条件实体
+ * @date: 2024/3/18 17:17
  * @version: 1.0
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RaffleFactorEntity {
+public class StrategyConditionEntity {
 
     /** 用户ID */
     private String userId;
     /** 策略ID */
-    private Long strategyId;
-    /** 奖品ID */
-    private Integer awardId;
+    private Integer strategyId;
+
 }

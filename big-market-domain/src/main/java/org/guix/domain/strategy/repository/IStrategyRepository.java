@@ -3,6 +3,7 @@ package org.guix.domain.strategy.repository;
 import org.guix.domain.strategy.model.entity.StrategyAwardEntity;
 import org.guix.domain.strategy.model.entity.StrategyEntity;
 import org.guix.domain.strategy.model.entity.StrategyRuleEntity;
+import org.guix.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,4 +32,6 @@ public interface IStrategyRepository {
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleWeight);
 
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
+
+    StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
 }
