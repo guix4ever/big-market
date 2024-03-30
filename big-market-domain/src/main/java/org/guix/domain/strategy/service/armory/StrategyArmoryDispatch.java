@@ -29,6 +29,8 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
 
     @Resource
     private IStrategyRepository repository;
+    private final SecureRandom secureRandom = new SecureRandom();
+
     /**
      * 装配抽奖策略配置「触发的时机可以为活动审核通过后进行调用」
      * @param strategyId 策略ID
@@ -40,12 +42,25 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         List<StrategyAwardEntity> strategyAwardEntities = repository.queryStrategyAwardList(strategyId);
         assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
 
-        //2. 权重策略配置 - 适用于rule_weight的权重规则配置
+        // 2 缓存奖品库存【用于decr扣减库存使用】
+        for (StrategyAwardEntity strategyAward : strategyAwardEntities) {
+            Integer awardId = strategyAward.getAwardId();
+            Integer awardCount = strategyAward.getAwardCount();
+            cacheStrategyAwardCount(strategyId, awardId, awardCount);
+        }
+
+        //3.1默认装配配置【全量抽奖概率】
+        assembleLotteryStrategy(String.valueOf(strategyId), strategyAwardEntities);
+
+
+
+        // 3.2 权重策略配置 - 适用于 rule_weight 权重规则配置【4000:102,103,104,105 5000:102,103,104,105,106,107 6000:102,103,104,105,106,107,108,109】
         StrategyEntity strategyEntity = repository.queryStrategyEntityByStrategyId(strategyId);
         String ruleWeight = strategyEntity.getRuleWeight();//获取权重的，区别于之后的黑名单策略
         if (null == ruleWeight) return true;
 
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleWeight);//查到具体的权重策略：4000/5000/6000各有不同
+        // 业务异常，策略规则中 rule_weight 权重规则已适用但未配置
         if (null == strategyRuleEntity) {
             throw new AppException(ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getCode(), ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL.getInfo());
         }
@@ -63,6 +78,13 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
 
     }
 
+    /**
+     * 计算公式；
+     * 1. 找到范围内最小的概率值，比如 0.1、0.02、0.003，需要找到的值是 0.003
+     * 2. 基于1找到的最小值，0.003 就可以计算出百分比、千分比的整数值。这里就是1000
+     * 3. 那么「概率 * 1000」分别占比100个、20个、3个，总计是123个
+     * 4. 后续的抽奖就用123作为随机数的范围值，生成的值100个都是0.1概率的奖品、20个是概率0.02的奖品、最后是3个是0.003的奖品。
+     */
     private void assembleLotteryStrategy(String key, List<StrategyAwardEntity> strategyAwardEntities) {
         // 1. 获取最小概率值
         BigDecimal minAwardRate = strategyAwardEntities.stream()
@@ -112,12 +134,14 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         return max;
     }
 
+
+
     @Override
     public Integer getRandomAwardId(Long strategyId) {
         // 分布式部署下，不一定为当前应用做的策略装配。也就是值不一定会保存到本应用，而是分布式应用，所以需要从 Redis 中获取。
         int rateRange = repository.getRateRange(strategyId);
         // 通过生成的随机值，获取概率值奖品查找表的结果
-        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), new SecureRandom().nextInt(rateRange));
+        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), secureRandom.nextInt(rateRange));
     }
 
     @Override
@@ -129,5 +153,36 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
         return repository.getStrategyAwardAssemble(key, new SecureRandom().nextInt(rateRange));
     }
 
+    /**
+     * 获取抽奖策略装配的随机结果
+     *
+     * @param key = strategyId + _ + ruleWeightValue；
+     * @return 抽奖结果
+     */
+    @Override
+    public Integer getRandomAwardId(String key) {
+        // 分布式部署下，不一定为当前应用做的策略装配。也就是值不一定会保存到本应用，而是分布式应用，所以需要从 Redis 中获取。
+        int rateRange = repository.getRateRange(key);
+        // 通过生成的随机值，获取概率值奖品查找表的结果
+        return repository.getStrategyAwardAssemble(key, secureRandom.nextInt(rateRange));
+    }
 
+    /**
+     * 缓存奖品库存到Redis
+     *
+     * @param strategyId 策略ID
+     * @param awardId    奖品ID
+     * @param awardCount 奖品库存
+     */
+    private void cacheStrategyAwardCount(Long strategyId, Integer awardId, Integer awardCount) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        repository.cacheStrategyAwardCount(cacheKey, awardCount);
+    }
+
+
+    @Override
+    public Boolean subtractionAwardStock(Long strategyId, Integer awardId) {
+        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId + Constants.UNDERLINE + awardId;
+        return repository.subtractionAwardStock(cacheKey);
+    }
 }

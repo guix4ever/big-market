@@ -4,16 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.guix.domain.strategy.model.entity.RaffleAwardEntity;
 import org.guix.domain.strategy.model.entity.RaffleFactorEntity;
-import org.guix.domain.strategy.model.entity.RuleActionEntity;
-import org.guix.domain.strategy.model.entity.StrategyEntity;
-import org.guix.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
-import org.guix.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import org.guix.domain.strategy.repository.IStrategyRepository;
-import org.guix.domain.strategy.service.IRaffleStrategy;
 import org.guix.domain.strategy.service.armory.IStrategyDispatch;
-import org.guix.domain.strategy.service.rule.chain.ILogicChain;
 import org.guix.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
-import org.guix.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import org.guix.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import org.guix.types.enums.ResponseCode;
 import org.guix.types.exception.AppException;
@@ -25,7 +18,7 @@ import org.guix.types.exception.AppException;
  * @version: 1.0
  */
 @Slf4j
-public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
+public abstract class AbstractRaffleStrategy implements IRaffleStrategy,IRaffleStock {
 
     // 策略仓储服务 -> domain层像一个大厨，仓储层提供米面粮油
     protected IStrategyRepository repository;
