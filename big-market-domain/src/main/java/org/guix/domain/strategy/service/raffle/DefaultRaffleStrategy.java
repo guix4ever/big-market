@@ -1,11 +1,14 @@
 package org.guix.domain.strategy.service.raffle;
 
 import lombok.extern.slf4j.Slf4j;
+import org.guix.domain.strategy.model.entity.StrategyAwardEntity;
 import org.guix.domain.strategy.model.valobj.RuleTreeVO;
 import org.guix.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import org.guix.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import org.guix.domain.strategy.repository.IStrategyRepository;
 import org.guix.domain.strategy.service.AbstractRaffleStrategy;
+import org.guix.domain.strategy.service.IRaffleAward;
+import org.guix.domain.strategy.service.IRaffleStock;
 import org.guix.domain.strategy.service.armory.IStrategyDispatch;
 import org.guix.domain.strategy.service.rule.chain.ILogicChain;
 import org.guix.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -14,6 +17,7 @@ import org.guix.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import org.guix.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 /**
@@ -24,7 +28,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class DefaultRaffleStrategy extends AbstractRaffleStrategy {//模板方法模式,拆解步骤，具体算法由具体类实现
+public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleStock, IRaffleAward {//模板方法模式,拆解步骤，具体算法由具体类实现
 
 
     public DefaultRaffleStrategy(IStrategyRepository repository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory) {
@@ -87,5 +91,10 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {//模板方�
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
         repository.updateStrategyAwardStock(strategyId, awardId);
 
+    }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        return repository.queryStrategyAwardList(strategyId);
     }
 }
