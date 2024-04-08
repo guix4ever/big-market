@@ -1,23 +1,21 @@
-package org.guix.infrastructure.persistent.po;
+package org.guix.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: Guix
- * @description: 抽奖活动账户表 持久化对象
- * @date: 2024/4/7 15:47
+ * @description: 活动账户实体对象
+ * @date: 2024/4/8 10:23
  * @version: 1.0
  */
 @Data
-public class RaffleActivityAccount {
-
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ActivityAccountEntity {
 
     /**
      * 用户ID
@@ -59,16 +57,4 @@ public class RaffleActivityAccount {
      */
     private Integer monthCountSurplus;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-
 }
-

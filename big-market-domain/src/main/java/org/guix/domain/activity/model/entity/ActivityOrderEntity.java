@@ -1,23 +1,24 @@
-package org.guix.infrastructure.persistent.po;
+package org.guix.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.guix.domain.activity.model.valobj.OrderStateVO;
 
 import java.util.Date;
 
 /**
  * @author: Guix
- * @description: 抽奖活动单 持久化对象
- * @date: 2024/4/7 15:56
+ * @description: 活动参与实体对象
+ * @date: 2024/4/8 10:24
  * @version: 1.0
  */
 @Data
-public class RaffleActivityOrder {
-
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ActivityOrderEntity {
 
     /**
      * 用户ID
@@ -67,17 +68,6 @@ public class RaffleActivityOrder {
     /**
      * 订单状态
      */
-    private String state;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
+    private OrderStateVO state;
 
 }

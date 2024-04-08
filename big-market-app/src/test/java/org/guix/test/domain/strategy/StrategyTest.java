@@ -1,4 +1,4 @@
-package org.guix.test.domain;
+package org.guix.test.domain.strategy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.guix.domain.strategy.service.armory.IStrategyArmory;
