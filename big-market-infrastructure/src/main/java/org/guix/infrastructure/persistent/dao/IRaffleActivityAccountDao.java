@@ -1,6 +1,7 @@
 package org.guix.infrastructure.persistent.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.guix.infrastructure.persistent.po.RaffleActivityAccount;
 
 /**
  * @author: Guix
@@ -10,4 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface IRaffleActivityAccountDao {
+    //没有账户就插入
+    void insert(RaffleActivityAccount raffleActivityAccount);
+   //有就更新
+    int updateAccountQuota(RaffleActivityAccount raffleActivityAccount);
 }
