@@ -3,6 +3,7 @@ package org.guix.domain.activity.service;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.guix.domain.activity.model.aggregate.CreateOrderAggregate;
 import org.guix.domain.activity.model.entity.*;
+import org.guix.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import org.guix.domain.activity.model.valobj.OrderStateVO;
 import org.guix.domain.activity.repository.IActivityRepository;
 import org.guix.domain.activity.service.rule.factory.DefaultActivityChainFactory;
@@ -17,7 +18,7 @@ import java.util.Date;
  * @version: 1.0
  */
 @Service
-public class RaffleActivityService extends AbstractRaffleActivity {
+public class RaffleActivityService extends AbstractRaffleActivity implements ISkuStock {
 
     public RaffleActivityService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         super(activityRepository, defaultActivityChainFactory);
@@ -55,6 +56,26 @@ public class RaffleActivityService extends AbstractRaffleActivity {
     @Override
     protected void doSaveOrder(CreateOrderAggregate createOrderAggregate) {
         activityRepository.doSaveOrder(createOrderAggregate);
+    }
+
+    @Override
+    public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {
+        return activityRepository.takeQueueValue();
+    }
+
+    @Override
+    public void clearQueueValue() {
+        activityRepository.clearQueueValue();
+    }
+
+    @Override
+    public void updateActivitySkuStock(Long sku) {
+        activityRepository.updateActivitySkuStock(sku);
+    }
+
+    @Override
+    public void clearActivitySkuStock(Long sku) {
+        activityRepository.clearActivitySkuStock(sku);
     }
 
 }

@@ -2,6 +2,8 @@ package org.guix.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 public interface IRedisService {
     /**
      * 设置指定 key 的值
@@ -256,4 +258,6 @@ public interface IRedisService {
     <T> RBloomFilter<T> getBloomFilter(String key);
 
     Boolean setNx(String key);
+
+    Boolean setNx(String key, long expired, TimeUnit timeUnit);
 }
