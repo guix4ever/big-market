@@ -8,7 +8,7 @@ import org.guix.domain.activity.model.valobj.ActivitySkuStockKeyVO;
  * @date: 2024/4/20 15:09
  * @version: 1.0
  */
-public interface ISkuStock {
+public interface IRaffleActivitySkuStockService {
     /**
      * 获取活动sku库存消耗队列
      *

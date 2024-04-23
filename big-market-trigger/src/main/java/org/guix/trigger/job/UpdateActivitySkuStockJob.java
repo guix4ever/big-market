@@ -2,7 +2,7 @@ package org.guix.trigger.job;
 
 import lombok.extern.slf4j.Slf4j;
 import org.guix.domain.activity.model.valobj.ActivitySkuStockKeyVO;
-import org.guix.domain.activity.service.ISkuStock;
+import org.guix.domain.activity.service.IRaffleActivitySkuStockService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 public class UpdateActivitySkuStockJob {
 
     @Resource
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStockService skuStock;
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {

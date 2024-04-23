@@ -1,10 +1,10 @@
-package org.guix.domain.activity.service;
+package org.guix.domain.activity.service.quota;
 
 import org.guix.domain.activity.model.entity.ActivityCountEntity;
 import org.guix.domain.activity.model.entity.ActivityEntity;
 import org.guix.domain.activity.model.entity.ActivitySkuEntity;
 import org.guix.domain.activity.repository.IActivityRepository;
-import org.guix.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import org.guix.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 
 /**
  * @author: Guix
@@ -12,12 +12,14 @@ import org.guix.domain.activity.service.rule.factory.DefaultActivityChainFactory
  * @date: 2024/4/8 15:12
  * @version: 1.0
  */
-public class RaffleActivitySupport {
+public class RaffleActivityAccountQuotaSupport {
+
+
     protected DefaultActivityChainFactory defaultActivityChainFactory;
 
     protected IActivityRepository activityRepository;
 
-    public RaffleActivitySupport(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
+    public RaffleActivityAccountQuotaSupport(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         this.activityRepository = activityRepository;
         this.defaultActivityChainFactory = defaultActivityChainFactory;
     }

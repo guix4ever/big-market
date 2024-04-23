@@ -1,6 +1,10 @@
 package org.guix.infrastructure.persistent.po;
 
+import com.rabbitmq.client.AMQP;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,8 +15,10 @@ import java.util.Date;
  * @version: 1.0
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class RaffleActivityAccount {
-
 
     /**
      * 自增ID
@@ -68,7 +74,6 @@ public class RaffleActivityAccount {
      * 更新时间
      */
     private Date updateTime;
-
 
 }
 

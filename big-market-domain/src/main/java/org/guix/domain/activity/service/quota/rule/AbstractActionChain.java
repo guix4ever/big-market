@@ -1,4 +1,4 @@
-package org.guix.domain.activity.service.rule;
+package org.guix.domain.activity.service.quota.rule;
 
 /**
  * @author: Guix

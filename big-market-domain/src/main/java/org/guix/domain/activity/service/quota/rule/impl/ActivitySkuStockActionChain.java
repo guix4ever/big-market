@@ -1,4 +1,4 @@
-package org.guix.domain.activity.service.rule.impl;
+package org.guix.domain.activity.service.quota.rule.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.guix.domain.activity.model.entity.ActivityCountEntity;
@@ -7,7 +7,7 @@ import org.guix.domain.activity.model.entity.ActivitySkuEntity;
 import org.guix.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import org.guix.domain.activity.repository.IActivityRepository;
 import org.guix.domain.activity.service.armory.IActivityDispatch;
-import org.guix.domain.activity.service.rule.AbstractActionChain;
+import org.guix.domain.activity.service.quota.rule.AbstractActionChain;
 import org.guix.types.enums.ResponseCode;
 import org.guix.types.exception.AppException;
 import org.springframework.stereotype.Component;
