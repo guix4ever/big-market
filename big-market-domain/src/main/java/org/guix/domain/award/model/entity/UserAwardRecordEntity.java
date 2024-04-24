@@ -1,19 +1,25 @@
-package org.guix.infrastructure.persistent.po;
+package org.guix.domain.award.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.guix.domain.award.model.vaobj.AwardStateVO;
 
 import java.util.Date;
 
 /**
  * @author: Guix
- * @description: 用户中奖记录表
- * @date: 2024/4/22 15:58
+ * @description: 用户中奖记录实体对象
+ * @date: 2024/4/23 17:29
  * @version: 1.0
  */
 @Data
-public class UserAwardRecord {
-    /** 自增ID */
-    private String id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserAwardRecordEntity {
+
     /** 用户ID */
     private String userId;
     /** 活动ID */
@@ -29,10 +35,6 @@ public class UserAwardRecord {
     /** 中奖时间 */
     private Date awardTime;
     /** 奖品状态；create-创建、completed-发奖完成 */
-    private String awardState;
-    /** 创建时间 */
-    private Date createTime;
-    /** 更新时间 */
-    private Date updateTime;
+    private AwardStateVO awardState;
 
 }
