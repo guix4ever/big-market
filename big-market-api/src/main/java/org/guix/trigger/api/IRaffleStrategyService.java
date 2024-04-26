@@ -2,8 +2,8 @@ package org.guix.trigger.api;
 
 import org.guix.trigger.api.dto.RaffleAwardListRequestDTO;
 import org.guix.trigger.api.dto.RaffleAwardListResponseDTO;
-import org.guix.trigger.api.dto.RaffleRequestDTO;
-import org.guix.trigger.api.dto.RaffleResponseDTO;
+import org.guix.trigger.api.dto.RaffleStrategyRequestDTO;
+import org.guix.trigger.api.dto.RaffleStrategyResponseDTO;
 import org.guix.types.model.Response;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @date: 2024/3/30 16:12
  * @version: 1.0
  */
-public interface IRaffleService {
+public interface IRaffleStrategyService {
 
     /**
      * 策略装配接口
@@ -38,6 +38,6 @@ public interface IRaffleService {
      * @param requestDTO 请求参数
      * @return 抽奖结果
      */
-    Response<RaffleResponseDTO> randomRaffle(RaffleRequestDTO requestDTO);
+    Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO requestDTO);
 
 }

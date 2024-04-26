@@ -3,6 +3,8 @@ package org.guix.infrastructure.persistent.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.guix.infrastructure.persistent.po.RaffleActivitySku;
 
+import java.util.List;
+
 /**
  * @author: Guix
  * @description: 商品sku dao
@@ -17,5 +19,8 @@ public interface IRaffleActivitySkuDao {
     void updateActivitySkuStock(Long sku);
 
     void clearActivitySkuStock(Long sku);
+
+    List<RaffleActivitySku> queryActivitySkuListByActivityId(Long activityId);
+
 
 }

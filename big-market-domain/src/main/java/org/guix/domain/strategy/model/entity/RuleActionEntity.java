@@ -5,7 +5,7 @@ import org.guix.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 
 /**
  * @author: Guix
- * @description: TODO
+ * @description: 策略行为实体
  * @date: 2024/3/15 19:48
  * @version: 1.0
  */

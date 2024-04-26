@@ -79,6 +79,18 @@ public class StrategyArmoryDispatch implements IStrategyArmory,IStrategyDispatch
     }
 
     /**
+     * 装配抽奖策略配置「触发的时机可以为活动审核通过后进行调用」
+     *
+     * @param activityId 活动ID
+     * @return 装配结果
+     */
+    @Override
+    public boolean assembleLotteryStrategyByActivityId(Long activityId) {
+        Long strategyId = repository.queryStrategyIdByActivityId(activityId);
+        return assembleLotteryStrategy(strategyId);
+    }
+
+    /**
      * 计算公式；
      * 1. 找到范围内最小的概率值，比如 0.1、0.02、0.003，需要找到的值是 0.003
      * 2. 基于1找到的最小值，0.003 就可以计算出百分比、千分比的整数值。这里就是1000

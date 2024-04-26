@@ -14,7 +14,7 @@ import java.util.Date;
 
 /**
  * @author: Guix
- * @description: TODO
+ * @description: 抽奖活动参与抽奖类
  * @date: 2024/4/22 20:12
  * @version: 1.0
  */

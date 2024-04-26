@@ -4,7 +4,7 @@ import org.guix.domain.award.model.aggregate.UserAwardRecordAggregate;
 
 /**
  * @author: Guix
- * @description: TODO
+ * @description: 奖品仓储
  * @date: 2024/4/23 17:28
  * @version: 1.0
  */

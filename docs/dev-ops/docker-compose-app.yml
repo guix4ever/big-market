@@ -6,7 +6,7 @@ services:
     container_name: big-market-app
     restart: always
     ports:
-      - "8091:8091"
+      - "8092:8092"
     environment:
       - TZ=PRC
       - SERVER_PORT=8091
